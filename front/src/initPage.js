@@ -19,8 +19,9 @@ export default class InitPage extends React.Component {
       Name: name,
       Password: password
     }).then(response => {
+      console.log(response.data);
       ReactDOM.render(
-        <ChatPage user_name={name} />,
+        <ChatPage user_name={name} jwtToken={response.data}/>,
         document.querySelector('#root')
       );
     }).catch(error => {

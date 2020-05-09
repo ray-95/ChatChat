@@ -16,11 +16,18 @@ export default class ChatPage extends React.Component {
     let content = document.querySelector('#content').value;
     let date = new Date();
     let time = date.getTime();
-    axios.post('/message', {
-      Receiver: receiver,
-      Sender: this.props.user_name,
-      Content: content,
-      Time: time
+    axios({
+      method: 'post',
+      url: '/message',
+      headers: {
+        Authorization: 'Bearer ' + this.props.jwtToken
+      },
+        data: {
+        Receiver: receiver,
+        Sender: this.props.user_name,
+        Content: content,
+        Time: time
+      }
     }).then(response => {
       console.log(response);
       document.querySelector('#sendStatus').innerHTML = 'Send successfully';
@@ -60,8 +67,13 @@ export default class ChatPage extends React.Component {
         <script>
           window.onload = () => {
             setInterval(() => {
-              axios.get('/message/' + this.props.user_name)
-              .then(response => {
+              axios({
+                method: 'get',
+                url: '/message/' + this.props.user_name,
+                headers: {
+                  Authorization: 'Bearer ' + this.props.jwtToken
+                }
+              }).then(response => {
                 response.data.forEach(message => {
                   let newMsgTime = document.createElement('div');
                   newMsgTime.innerHTML = new Date(message['time']).toLocaleTimeString();

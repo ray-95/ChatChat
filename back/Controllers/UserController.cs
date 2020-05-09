@@ -2,6 +2,7 @@ using chat.Models;
 using chat.Services;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace chat.Controllers {
     [ApiController]
@@ -13,13 +14,13 @@ namespace chat.Controllers {
             _userService = userService;
         }
 
-        [HttpGet]
-        public List<User> GetAll() =>
-            _userService.GetAll();
+        // [HttpGet]
+        // public List<User> GetAll() =>
+        //     _userService.GetAll();
 
-        [HttpDelete]
-        public void DeleteAll() =>
-            _userService.DeleteAll();
+        // [HttpDelete]
+        // public void DeleteAll() =>
+        //     _userService.DeleteAll();
 
         [HttpPost("signup")]
         public IActionResult SignUp(User user) {
@@ -32,20 +33,11 @@ namespace chat.Controllers {
 
         [HttpPost("signin")]
         public IActionResult SignIn(User user) {
-            string msg = _userService.SignIn(user);
-            if (msg == "Ok") {
-                return Ok();
+            string[] msg = _userService.SignIn(user);
+            if (msg[0] == "Ok") {
+                return Ok(msg[1]);
             }
-            return BadRequest(msg);
-        }
-
-        [HttpPost("deleteaccount")]
-        public IActionResult DeleteAccount(User user) {
-            string msg = _userService.DeleteAccount(user);
-            if (msg == "Ok") {
-                return Ok();
-            }
-            return BadRequest(msg);
+            return BadRequest(msg[0]);
         }
     }
 }

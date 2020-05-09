@@ -1,18 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using chat.Models;
 using chat.Services;
+using chat.Settings;
 using Microsoft.Extensions.Options;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace chat
 {
@@ -27,11 +23,36 @@ namespace chat
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<DbSettings>(
-                Configuration.GetSection(nameof(DbSettings)));
-
+            var dbSettings = Configuration.GetSection("DbSettings");
+            services.Configure<DbSettings>(dbSettings);
             services.AddSingleton<DbSettings>(sp => 
                 sp.GetRequiredService<IOptions<DbSettings>>().Value);
+
+            var jwtSettings = Configuration.GetSection("JwtSettings");
+            services.Configure<JwtSettings>(jwtSettings);
+            services.AddSingleton<JwtSettings>(sp => 
+                sp.GetRequiredService<IOptions<JwtSettings>>().Value);
+
+            var key = Encoding.ASCII.GetBytes(
+                jwtSettings.Get<JwtSettings>().Secret
+            );
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                };
+            });
 
             services.AddSingleton<UserService>();
 
@@ -52,6 +73,10 @@ namespace chat
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
