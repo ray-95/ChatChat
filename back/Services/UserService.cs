@@ -45,7 +45,7 @@ namespace chat.Services {
             }
 
             if (!Regex.Match(user.Name, @"^[a-zA-Z0-9_-]{4,16}$").Success) {
-                return "Username can only contain letters, numbers, dash " + 
+                return "Username can only contain letters, numbers, dashes " + 
                     "and underscores, and must be 4-16 characters long.";
             }
 
