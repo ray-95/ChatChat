@@ -45,11 +45,12 @@ namespace chat.Services {
             }
 
             if (!Regex.Match(user.Name, @"^[a-zA-Z0-9_-]{4,16}$").Success) {
-                return "Username can only contain letters, numbers, hyphens and underscores, and must be between 4 and 16 characters long.";
+                return "Username can only contain letters, numbers, dash " + 
+                    "and underscores, and must be 4-16 characters long.";
             }
 
             if (!Regex.Match(user.Password, @"(?=.{6,18})").Success) {
-                return "Password must be between 6 and 18 characters long.";
+                return "Password must be 6-18 characters long.";
             }
 
             Create(user);
@@ -58,18 +59,17 @@ namespace chat.Services {
 
         public string[] SignIn(User user) {
             if (this.GetByName(user.Name) == null) {
-                return new string[]{"Couldn't find your account."};
+                return new string[] {"Couldn't find your account."};
             }
 
             if (this.GetByName(user.Name)
                 .Password != user.Password) {
-                return new string[]{"Wrong password."};
+                return new string[] {"Wrong password."};
             }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secret);
-            var tokenDescriptor = new SecurityTokenDescriptor{
-                Subject = new ClaimsIdentity(new Claim[]{
+            var tokenDescriptor = new SecurityTokenDescriptor {
+                Subject = new ClaimsIdentity(new Claim[] {
                     new Claim(ClaimTypes.Name, user.Name)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
@@ -78,8 +78,10 @@ namespace chat.Services {
                     SecurityAlgorithms.HmacSha256Signature
                 )
             };
+            var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return new string[]{"Ok", tokenHandler.WriteToken(token)};
+            var s_token = tokenHandler.WriteToken(token);
+            return new string[] {"Ok", s_token};
         }
     }
 }

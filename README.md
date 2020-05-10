@@ -1,15 +1,17 @@
 # Introduction
 A simple IM web app using .NET Core/React/MongoDB.
+
+# Running it
 ```
 $ git clone https://github.com/ray-95/ChatChat
 $ cd ChatChat/front/
 $ npm i
 $ npm run build
-$ cd ../back/
+$ cd ..
 $ mkdir db
 $ mongod --dbpath db/
 
-Open another shell
+Open a new shell
 $ mongo
   > use ChatDb
   > db.createCollection('Users')
@@ -18,5 +20,4 @@ $ mongo
 
 cd to ChatChat/back
 $ dotnet run
-
-The app is running on http://localhost:5001
+```

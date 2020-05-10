@@ -60,7 +60,7 @@ export default class ChatPage extends React.Component {
         </div>
         <div>
           <button id='send' onClick={() => { this.send() }}>Send</button>
-          <div id='sendStatus'> </div>
+          <div id='sendStatus'></div>
         </div>
         <div id='msgList'>Message List</div>
 

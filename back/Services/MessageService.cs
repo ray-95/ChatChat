@@ -36,7 +36,7 @@ namespace chat.Services {
             _messages.DeleteOne(message => message.Id == id);
 
         public string SendMessage(Message message) {
-            Console.WriteLine(JsonSerializer.Serialize(message));
+            // Console.WriteLine(JsonSerializer.Serialize(message));
             if (_userService.GetByName(message.Receiver) == null) {
                 return "Couldn't find this user.";
             }
