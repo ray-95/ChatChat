@@ -29,40 +29,47 @@ export default class ChatPage extends React.Component {
         Time: time
       }
     }).then(response => {
-      console.log(response);
-      document.querySelector('#sendStatus').innerHTML = 'Send successfully';
-      let newMsgTime = document.createElement('div');
-      newMsgTime.innerHTML = date.toLocaleTimeString();
-      var newMsgContent = document.createElement('div');
-      newMsgContent.innerHTML =
-        'To ' + receiver + ': ' + content;
-      document.querySelector('#msgList').appendChild(newMsgTime);
-      document.querySelector('#msgList').appendChild(newMsgContent);
+      // console.log(response);
+      // document.querySelector('#sendStatus').innerHTML = 'Send successfully';
+
+      let newMsg = document.createElement('div');
+      newMsg.className = 'msg';
+      newMsg.innerHTML = date.toLocaleTimeString() + 
+        '<br/>To ' + receiver + ': ' + content;
+
+      let newRightMsg = document.createElement('div');
+      newRightMsg.className = 'right-msg';
+      newRightMsg.appendChild(newMsg);
+      
+      let chatBox = document.querySelector('#chatBox');
+      chatBox.appendChild(newRightMsg);
+      chatBox.appendChild(document.createElement('br'));
+      chatBox.scrollTop = chatBox.scrollHeight;
     }).catch(error => {
-      document.querySelector('#sendStatus').innerHTML = error.response.data;
+      // console.log(error.response.data);
+      // document.querySelector('#sendStatus').innerHTML = error.response.data;
     });
   };
 
   render() {
     return (
       <div>
-        <div>
-          {this.props.user_name}
-          <button id='signout' onClick={() => { this.signOut() }}>Sign Out</button>
+        <div className='chatPage-header'>
+          <div>
+            Hi, {this.props.user_name}
+            <button id='signout' onClick={() => { this.signOut() }}>Sign Out</button>
+          </div>
+          Send to <input type='text' id='receiver'/>
         </div>
-        <div>
-          <div>Send To</div>
-          <input type='text' id='receiver' />
+      
+        <div className='chatPage-main' id='chatBox'></div>
+        
+        <div className='chatPage-footer'>
+          <input className='editor' type='text' id='content'/>
+          <button className='sendButton' onClick={() => { this.send() }}>
+            Send
+          </button>
         </div>
-        <div>
-          <div>Content</div>
-          <input type='text' id='content' />
-        </div>
-        <div>
-          <button id='send' onClick={() => { this.send() }}>Send</button>
-          <div id='sendStatus'></div>
-        </div>
-        <div id='msgList'>Message List</div>
 
         <script>
           window.onload = () => {
@@ -74,15 +81,23 @@ export default class ChatPage extends React.Component {
                   Authorization: 'Bearer ' + this.props.jwtToken
                 }
               }).then(response => {
+                console.log(response);
                 response.data.forEach(message => {
-                  let newMsgTime = document.createElement('div');
-                  newMsgTime.innerHTML = new Date(message['time']).toLocaleTimeString();
-                  var newMsgContent = document.createElement('div');
-                  newMsgContent.innerHTML =
-                    'From ' + message['sender'] + ': ' + message['content'];
-                  document.querySelector('#msgList').appendChild(newMsgTime);
-                  document.querySelector('#msgList').appendChild(newMsgContent);
-                });
+                  let newMsg = document.createElement('div');
+                  newMsg.className = 'msg';
+                  newMsg.innerHTML = new Date(message['time'])
+                  .toLocaleTimeString() + '<br/>From ' + message['sender'] +
+                  ': ' + message['content'];
+
+                  let newLeftMsg = document.createElement('div');
+                  newLeftMsg.className = 'left-msg';
+                  newLeftMsg.appendChild(newMsg);
+
+                  let chatBox = document.querySelector('#chatBox');
+                  chatBox.appendChild(newLeftMsg);
+                  chatBox.appendChild(document.createElement('br'));
+                  chatBox.scrollTop = chatBox.scrollHeight;
+                })
               })
             }, 200)
           }

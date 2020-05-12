@@ -48,6 +48,9 @@ export default function SignUpPage() {
       Password: password
     }).then(response => {
       document.querySelector('#msg').innerHTML = 'Create successfully.';
+      setTimeout(() => {
+        back();
+      }, 2000);
     }).catch(error => {
       document.querySelector('#msg').innerHTML = error.response.data;
     });

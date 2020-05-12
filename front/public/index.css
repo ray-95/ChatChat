@@ -1,0 +1,53 @@
+body {
+  background-color: black;
+  overflow: hidden;
+}
+
+.chatPage-header {
+  height: auto;
+  text-align: center;
+  background-color: green;
+}
+
+.chatPage-main {
+  display: flex;
+  overflow: auto;
+  height: 90vh;
+  background-color: grey;
+  flex-direction: column;
+}
+
+.left-msg {
+  display: flex;
+  margin-left: 2%;
+  margin-right: 51%;
+  flex-direction: row;
+}
+
+.right-msg {
+  display: flex;
+  margin-left: 51%;
+  margin-right: 2%;
+  flex-direction: row-reverse;
+}
+
+.msg {
+  display: flex;
+  width: fit-content;
+  word-break: break-all;
+  background-color: yellow;
+}
+
+.chatPage-footer {
+  height: 3vh;
+  display: flex;
+  background-color: white;
+}
+
+.editor {
+  width: 95%;
+}
+
+.sendButton {
+  width: 5%;
+}
