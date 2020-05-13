@@ -1,10 +1,14 @@
-body {
-  background-color: black;
-  overflow: hidden;
+html, body {
+  margin: 0%;
+}
+
+.chatPage {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
 }
 
 .chatPage-header {
-  height: auto;
   text-align: center;
   background-color: green;
 }
@@ -12,7 +16,8 @@ body {
 .chatPage-main {
   display: flex;
   overflow: auto;
-  height: 90vh;
+  height: 1;
+  flex-grow: 1;
   background-color: grey;
   flex-direction: column;
 }
@@ -32,22 +37,21 @@ body {
 }
 
 .msg {
-  display: flex;
   width: fit-content;
   word-break: break-all;
-  background-color: yellow;
+
+  background: deepskyblue;
+	border-radius: .4em;
 }
 
 .chatPage-footer {
-  height: 3vh;
   display: flex;
-  background-color: white;
 }
 
 .editor {
-  width: 95%;
+  flex-grow: 10;
 }
 
 .sendButton {
-  width: 5%;
+  flex-grow: 1;
 }

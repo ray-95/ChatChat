@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import InitPage from './initPage';
+import SignInPage from './signInPage';
 
 export default class ChatPage extends React.Component {
   signOut = () => {
     ReactDOM.render(
-      <InitPage />,
+      <SignInPage />,
       document.querySelector('#root')
     );
   }
@@ -53,11 +53,12 @@ export default class ChatPage extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='chatPage'>
+        <link rel="stylesheet" type="text/css" href="chatPage.css"></link>
         <div className='chatPage-header'>
           <div>
             Hi, {this.props.user_name}
-            <button id='signout' onClick={() => { this.signOut() }}>Sign Out</button>
+            <button id='signout' onClick={ this.signOut }>Sign Out</button>
           </div>
           Send to <input type='text' id='receiver'/>
         </div>
@@ -66,7 +67,7 @@ export default class ChatPage extends React.Component {
         
         <div className='chatPage-footer'>
           <input className='editor' type='text' id='content'/>
-          <button className='sendButton' onClick={() => { this.send() }}>
+          <button className='sendButton' onClick={ this.send }>
             Send
           </button>
         </div>

@@ -1,0 +1,38 @@
+html, body {
+  margin: 0%;
+}
+
+.initPage {
+  display: flex;
+  height: 100vh;
+  background-color: grey;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.initPage-main {
+  background-color: green;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+}
+
+.inputs {
+  display: flex;
+}
+
+.input-title {
+  width: 100%;
+}
+
+.input-content {
+  flex-grow: 1;
+}
+
+.status {
+  height: 5%;
+}

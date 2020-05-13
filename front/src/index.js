@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import InitPage from './initPage';
+import SignInPage from './signInPage';
 
 ReactDOM.render(
-  <InitPage />,
+  <SignInPage />,
   document.querySelector('#root')
 );
