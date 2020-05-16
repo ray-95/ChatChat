@@ -32,13 +32,21 @@ export default class ChatPage extends React.Component {
       // console.log(response);
       // document.querySelector('#sendStatus').innerHTML = 'Send successfully';
 
+      let newMsgTime = document.createElement('div');
+      newMsgTime.className = 'msg-time';
+      newMsgTime.innerHTML = date.toLocaleTimeString() + '<br/>';
+
+      let newMsgContent = document.createElement('div');
+      newMsgContent.className = 'right-msg-content';
+      newMsgContent.innerHTML = 'To ' + receiver + ': ' + content;
+
       let newMsg = document.createElement('div');
-      newMsg.className = 'msg';
-      newMsg.innerHTML = date.toLocaleTimeString() + 
-        '<br/>To ' + receiver + ': ' + content;
+      newMsg.className = 'right-msg-col';
+      newMsg.appendChild(newMsgTime);
+      newMsg.appendChild(newMsgContent);
 
       let newRightMsg = document.createElement('div');
-      newRightMsg.className = 'right-msg';
+      newRightMsg.className = 'right-msg-row';
       newRightMsg.appendChild(newMsg);
       
       let chatBox = document.querySelector('#chatBox');
@@ -84,14 +92,23 @@ export default class ChatPage extends React.Component {
               }).then(response => {
                 console.log(response);
                 response.data.forEach(message => {
+                  let newMsgTime = document.createElement('div');
+                  newMsgTime.className = 'msg-time';
+                  newMsgTime.innerHTML = new Date(message['time'])
+                    .toLocaleTimeString() + '<br/>';
+
+                  let newMsgContent = document.createElement('div');
+                  newMsgContent.className = 'left-msg-content';
+                  newMsgContent.innerHTML = 'From ' + message['sender'] +
+                    ': ' + message['content'];
+
                   let newMsg = document.createElement('div');
-                  newMsg.className = 'msg';
-                  newMsg.innerHTML = new Date(message['time'])
-                  .toLocaleTimeString() + '<br/>From ' + message['sender'] +
-                  ': ' + message['content'];
+                  newMsg.className = 'left-msg-col';
+                  newMsg.appendChild(newMsgTime);
+                  newMsg.appendChild(newMsgContent);
 
                   let newLeftMsg = document.createElement('div');
-                  newLeftMsg.className = 'left-msg';
+                  newLeftMsg.className = 'left-msg-row';
                   newLeftMsg.appendChild(newMsg);
 
                   let chatBox = document.querySelector('#chatBox');

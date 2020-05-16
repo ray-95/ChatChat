@@ -10,7 +10,12 @@ html, body {
 
 .chatPage-header {
   text-align: center;
-  background-color: green;
+  padding: 10px;
+  border-bottom: 5px solid #ff7f50;
+  color: #ff7f50;
+  margin-bottom: 8px;
+  font-size: 14px;
+  background: #f0f0f0;
 }
 
 .chatPage-main {
@@ -18,30 +23,70 @@ html, body {
   overflow: auto;
   height: 1;
   flex-grow: 1;
-  background-color: grey;
+  background-color: white;
   flex-direction: column;
 }
 
-.left-msg {
+.left-msg-row {
   display: flex;
   margin-left: 2%;
   margin-right: 51%;
   flex-direction: row;
 }
 
-.right-msg {
+.right-msg-row {
   display: flex;
   margin-left: 51%;
   margin-right: 2%;
   flex-direction: row-reverse;
 }
 
-.msg {
+.left-msg-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.right-msg-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.msg-time {
+  margin: 0 1em;
+  display: inline;
+  white-space: nowrap;
+  word-break: break-all;
+  font-size: 0.5em;
+}
+
+.left-msg-content {
   width: fit-content;
   word-break: break-all;
 
-  background: deepskyblue;
-	border-radius: .4em;
+  margin: 0 0 1em 0;
+  padding: 0.2em 0.5em;
+  display: inline-block;
+  white-space: normal;
+  word-break: break-all;
+  background-color: aqua;
+  border-radius: 0.5em;
+  box-shadow: 0.4em 0.4em 0.3em lightsteelblue;
+}
+
+.right-msg-content {
+  width: fit-content;
+  word-break: break-all;
+
+  margin: 0 0 1em 0;
+  padding: 0.2em 0.5em;
+  display: inline-block;
+  white-space: normal;
+  word-break: break-all;
+  background-color: khaki;
+  border-radius: 0.5em;
+  box-shadow: 0.4em 0.4em 0.3em lightsteelblue;
 }
 
 .chatPage-footer {
